@@ -18,8 +18,8 @@ Resources:
           # If TRANSFER_TYPE is 'all', transfers all available BTC
           # Otherwise, transfers NICE_HASH_WITHDRAWALS_STD_TRANSFER_AMT
           TRANSFER_TYPE: "all"
-      #     # If RUN_MODE is 'test', runs in test mode
-      #     RUN_MODE: "test"
+          # If RUN_MODE is 'test', runs in test mode
+          RUN_MODE: "test"
           # https://docs.nicehash.com/
           NICE_HASH_ORG_ID: '{{resolve:ssm:/nice_hash/organization_id:1}}'
           NICE_HASH_WALLET_API_KEY: '{{resolve:ssm:/nice_hash/api_keys/wallet/key:1}}'
