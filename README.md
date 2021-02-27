@@ -4,7 +4,7 @@ An AWS Lambda function to automate withdrawals from Nice Hash
 
 This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. 
 
-The [`template.yaml`](template.yaml) is a template that defines the application's AWS resources.
+The [`template.yaml`](template.yaml) is a template that defines the application's AWS resources and configurations for those resources. Pay special attention to this file for configuring the project.
 
 If you prefer to use an integrated development environment (IDE) to build and test the application, you can use the AWS Toolkit.  
 The AWS Toolkit is an open source plug-in for popular IDEs that uses the SAM CLI to build and deploy serverless applications on AWS. The AWS Toolkit also adds a simplified step-through debugging experience for Lambda function code. See the following links to get started.
@@ -55,6 +55,21 @@ You can also list all parameters stored directly in a path with:
 
 ```sh
 aws ssm get-parameters-by-path --path /example/hierarchy
+```
+
+These secret paths should match the paths found in the [`template.yaml`](template.yaml) file as values for certain environment variables. An example is 
+
+```yaml
+NICE_HASH_ORG_ID: '{{resolve:ssm:/nice_hash/organization_id:1}}'
+```
+
+In this case, you would want to run the following command to store the secret with `ssm`:
+
+```sh
+aws ssm put-parameter \
+    --name "/nice_hash/organization_id" \
+    --type "String" \
+    --value "1234"
 ```
 
 ## Deploy the application
