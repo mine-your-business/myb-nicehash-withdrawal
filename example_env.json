@@ -1,0 +1,11 @@
+{
+  "NiceHashWithdrawBtcFn": {
+    "RUN_MODE": "test",
+    "NICE_HASH_ORG_ID": "",
+    "NICE_HASH_WALLET_API_KEY": "",
+    "NICE_HASH_WALLET_API_SECRET": "",
+    "NICE_HASH_WITHDRAWALS_ADDR_CODE": "COINBASE",
+    "NICE_HASH_WITHDRAWALS_ADDR": "example@gmail.com",
+    "NICE_HASH_WITHDRAWALS_ADDR_ID": ""
+  }
+}

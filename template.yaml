@@ -1,0 +1,43 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  myb-nicehash-withdrawal
+
+  Serverless capabilities for managing aspects of a mining business
+
+Resources:
+  # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+  NiceHashWithdrawBtcFn:
+    Type: AWS::Serverless::Function 
+    Properties:
+      CodeUri: nicehash_withdraw_btc_function
+      Handler: nicehash_withdraw_btc.app.lambda_handler
+      Runtime: python3.8
+      Environment:
+        Variables:
+          # If TRANSFER_TYPE is 'all', transfers all available BTC
+          # Otherwise, transfers NICE_HASH_WITHDRAWALS_STD_TRANSFER_AMT
+          TRANSFER_TYPE: "all"
+      #     # If RUN_MODE is 'test', runs in test mode
+      #     RUN_MODE: "test"
+          # https://docs.nicehash.com/
+          NICE_HASH_ORG_ID: '{{resolve:ssm:/nice_hash/organization_id:1}}'
+          NICE_HASH_WALLET_API_KEY: '{{resolve:ssm:/nice_hash/api_keys/wallet/key:1}}'
+          NICE_HASH_WALLET_API_SECRET: '{{resolve:ssm:/nice_hash/api_keys/wallet/secret:1}}'
+          NICE_HASH_API_URL: https://api2.nicehash.com
+          NICE_HASH_CRYPTOCURRENCY: BTC
+          NICE_HASH_WITHDRAWALS_ADDR_CODE: '{{resolve:ssm:/nice_hash/withdrawals/address_code:1}}'
+          NICE_HASH_WITHDRAWALS_ADDR: '{{resolve:ssm:/nice_hash/withdrawals/address:1}}'
+          # If this is specified, the ADDR_CODE and ADDR will be ignored as they are used to 
+          # dynamically determine the ADDR_ID
+          # NICE_HASH_WITHDRAWALS_ADDR_ID: '{{resolve:ssm:/nice_hash/withdrawals/address_id:1}}'
+          NICE_HASH_WITHDRAWALS_MIN_BAL: 0.001
+          NICE_HASH_WITHDRAWALS_STD_TRANSFER_AMT: 0.001
+      Events:
+        CWSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: cron(0 0 * * ? *)
+            Name: NiceHashWithdrawBtcSchedule
+            Description: execution schedule for withdrawing BTC from Nice Hash
+            Enabled: True
