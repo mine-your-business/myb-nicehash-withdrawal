@@ -1,5 +1,9 @@
 # myb-nicehash-withdrawal
 
+> [!NOTE]
+> **Archived.** This AWS SAM app is not deployed and is no longer maintained. It targets an AWS Lambda Python runtime that AWS has deprecated.
+
+
 An AWS Lambda function to automate withdrawals from Nice Hash
 
 This project contains source code and supporting files for a serverless application that you can deploy with the SAM CLI. 
